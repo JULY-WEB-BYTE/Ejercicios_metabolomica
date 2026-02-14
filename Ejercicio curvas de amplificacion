@@ -1,0 +1,35 @@
+
+#Julieta Tavera Tello
+#Ejercicio curvas de amplificación
+
+install.packages("pacman")
+#pacman llama a otros paquetes, y si no están instala
+
+library("pacman")
+
+p_load("vroom", #llamar base de datos
+       "dplyr", #facilita el manejo de datos
+       "ggplot2") #graficar
+
+Garu <- vroom(file="https://raw.githubusercontent.com/ManuelLaraMVZ/resultados_PCR_practica/refs/heads/main/Amplif_grupo1_17022025.csv")
+
+head(Garu)
+
+Datos <- Garu %>% # %>% significa que a la base de datos anterior le haremos lo siguiente
+  select("Cycle", 3)
+
+Datos
+
+Grafica <- ggplot(Datos,
+                  mapping = aes(x=Cycle,
+                                y=B1))+
+  geom_line(color="#B3E3D6",
+            size=1.5)+
+  labs(x="Ciclos",
+       y="Fluorescencia",
+       title="Gráfica de amplificación RT-qPCR",
+       subtitle="Muestra A1",
+       caption="Diseño: Julieta Tavera Tello")+
+  geom_point(color="#E3B3C8")+
+  theme_classic()
+Grafica
